@@ -1,9 +1,15 @@
-import React from "react";
+import React, { Props } from "react";
+import { useLaunchDetailQuery } from "../../generated/graphql";
+import { MissionLaunch } from "./MissionLaunch";
 
-export const MissionContainer = () => {
-  return (
-    <div>
-      <h2>Space Mission</h2>
-    </div>
-  );
+const MissionContainer = () => {
+  const { data, loading, error } = useLaunchDetailQuery();
+  if (loading) return <p>loading...</p>;
+
+  if (error || !data) return console.log(error);
+
+  console.log(data);
+  return <MissionLaunch data={data} />;
 };
+
+export default MissionContainer;
